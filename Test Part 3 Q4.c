@@ -12,18 +12,18 @@ struct Loto
 	struct Loto* Prev;
 };
 
-struct Loto* Head= NULL;
+struct Loto* Head = NULL;
 struct Loto* Tail = NULL;
 
 void AddLotoDraw(int loto_num, char loto_date[100]) {
-	struct Loto* CurrentLoto= NULL;
+	struct Loto* CurrentLoto = NULL;
 	struct Loto* PrevLoto = NULL;
 
 	CurrentLoto = (struct Loto*)malloc(sizeof(struct Loto));
 	CurrentLoto->LotoNum = loto_num;
 	strcpy(CurrentLoto->LotoDate, loto_date);
 
-	if (Head== NULL)
+	if (Head == NULL)
 	{
 		Head = CurrentLoto;
 		Tail = CurrentLoto;
@@ -33,7 +33,7 @@ void AddLotoDraw(int loto_num, char loto_date[100]) {
 	}
 	else
 	{
-		CurrentLoto->Next =NULL;
+		CurrentLoto->Next = NULL;
 		CurrentLoto->Prev = PrevLoto;
 		Tail = CurrentLoto;
 		PrevLoto = CurrentLoto;
@@ -41,7 +41,7 @@ void AddLotoDraw(int loto_num, char loto_date[100]) {
 }
 
 void LotoLoadFile() {
-	FILE* f = fopen("Lotto.txt", "r");
+	FILE* f = fopen("C:\\Users\\User\\source\\repos\\ConsoleApplication4\\ConsoleApplication4\\Lotto.csv", "r");
 	if (!f)
 	{
 		//error
@@ -50,7 +50,7 @@ void LotoLoadFile() {
 	{
 		char str[1000];
 		fgets(str, 1000, f);
-		while (fgets(str,1000,f))
+		while (fgets(str, 1000, f))
 		{
 			char LottoryNum[50];
 			char LottoryDate[50];
@@ -70,16 +70,22 @@ void SerchLoto(int loto_num)
 	struct Loto* currentItem1 = Head;
 	struct Loto* serch = Head;
 
-	while (serch->Next =NULL)
+	while (serch != NULL)
 	{
 		serch = currentItem1;
-		currentItem1 = currentItem1->Next;
+		
 
 		if (serch->LotoNum == loto_num)
 		{
 			printf("the raffle:\n loto number: %d\n loto date: %s\n", serch->LotoNum, serch->LotoDate);
+			return;
 		}
+
+		serch = serch->Next;
+
 	}
+	printf("Lotto Draw wasnt found");
+	return;
 }
 
 void FreeList() {
@@ -130,6 +136,5 @@ int main()
 	}
 	return 0;
 }
-
 
 
